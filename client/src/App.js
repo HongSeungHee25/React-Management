@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import Customer from './components/Customer';
 import React, { Component } from 'react'; // React import 수정
-import { Paper ,Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
+import { CircularProgress,Paper ,Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 import { withStyles } from '@mui/styles';
 
 const styles = (theme) => ({
@@ -14,13 +14,28 @@ const styles = (theme) => ({
   table:{
     minWidth: 1080,
   },
+  progress:{
+   margin: 12, 
+  }
 });
+
+/* 
+  1) constructor()
+  2) componentWillMount()
+  3) render()
+  4) componentDidMount()
+
+
+  props or state => shouldComponentUpdate()
+*/
 
 class App extends Component {
   state = {
-    customers: []
+    customers: [],
+    completed: []
   }
   componentDidMount() {
+    this.timer = setInterval(this.progress, 20);
     this.callApi()
       .then(res => this.setState({customers: res}))
       .catch(err => console.log(err));
@@ -30,6 +45,11 @@ class App extends Component {
     const body = await response.json();
     return body;
   }
+  progress = ()=>{
+    const { completed } = this.state;
+    this.setState({ completed: completed >= 100 ? 0 : completed + 1 })
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -58,7 +78,12 @@ class App extends Component {
                   job={c.job}
                 />
             )
-          }) : ""}
+          }) :
+          <TableRow>
+              <TableCell colSpan="6" align="center">
+                  <CircularProgress className={classes.progress} variant="determinate" value={this.state.completed} />
+              </TableCell>
+            </TableRow>}
         </TableBody>
         </Table>
       </Paper>
