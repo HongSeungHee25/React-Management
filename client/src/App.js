@@ -30,9 +30,10 @@ const styles = (theme) => ({
 */
 
 class App extends Component {
+
   state = {
-    customers: [],
-    completed: []
+    customers: "",
+    completed: 0
   }
   componentDidMount() {
     this.timer = setInterval(this.progress, 20);
@@ -40,14 +41,14 @@ class App extends Component {
       .then(res => this.setState({customers: res}))
       .catch(err => console.log(err));
   }
-  callApi = async () => {
+  callApi= async () => {
     const response = await fetch('/api/customers');
     const body = await response.json();
     return body;
   }
   progress = ()=>{
     const { completed } = this.state;
-    this.setState({ completed: completed >= 100 ? 0 : completed + 1 })
+    this.setState({ completed: completed >= 100 ? 0 : completed + 1 });
   }
 
   render() {
@@ -83,7 +84,8 @@ class App extends Component {
               <TableCell colSpan="6" align="center">
                   <CircularProgress className={classes.progress} variant="determinate" value={this.state.completed} />
               </TableCell>
-            </TableRow>}
+            </TableRow>
+            }
         </TableBody>
         </Table>
       </Paper>
