@@ -98,15 +98,15 @@ class CustomerAdd extends React.Component {
                     <DialogContent>
                     <input className={classes.hidden} accept="image/*" id="raised-button-file" type="file" file={this.state.file} value={this.state.fileName} onChange={this.handleFileChange} /><br/>
                     <label htmlFor="raised-button-file">
-                        <Button variant="contained" color="primary" component="span" name="file">
+                        <Button variant="contained" color="primary" component="span" name="file" style={{ marginBottom: '20px' }}>
                             {this.state.fileName === "" ? "프로필 이미지 선택" : this.state.fileName}
                         </Button>
                     </label>
                     <br/>
-                    <TextField label="이름" type="text" name="userName" value={this.state.userName} onChange={this.handleValueChange} /><br/>
-                    <TextField label="생년월일" type="text" name="birthday" value={this.state.birthday} onChange={this.handleValueChange} /><br/>
-                    <TextField label="성별" type="text" name="gender" value={this.state.gender} onChange={this.handleValueChange} /><br/>
-                    <TextField label="직업" type="text" name="job" value={this.state.job} onChange={this.handleValueChange} /><br/>
+                    <TextField label="이름" type="text" name="userName" value={this.state.userName} onChange={this.handleValueChange} style={{ marginBottom: '20px' }} /><br/>
+                    <TextField label="생년월일" type="text" name="birthday" value={this.state.birthday} onChange={this.handleValueChange} style={{ marginBottom: '20px' }} /><br/>
+                    <TextField label="성별" type="text" name="gender" value={this.state.gender} onChange={this.handleValueChange} style={{ marginBottom: '20px' }} /><br/>
+                    <TextField label="직업" type="text" name="job" value={this.state.job} onChange={this.handleValueChange}  /><br/>
                     </DialogContent>
                     <DialogActions>
                         <Button variant="contained" color="primary" onClick={this.handleFormSubmit}>추가</Button>

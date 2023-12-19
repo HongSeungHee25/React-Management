@@ -74,7 +74,7 @@ const styles = (theme) => ({
   },
   progress:{
    margin: 12, 
-  }
+  },
 });
 
 /* 
@@ -132,7 +132,13 @@ class App extends Component {
   render() {
     const filteredComponents = (data) => {
       data = data.filter((c) => {
-        return (c.NAME || '').indexOf(this.state.searchKeyword) > -1;
+        const searchKeywordLower = this.state.searchKeyword.toLowerCase();
+        return (
+          (c.NAME && c.NAME.toLowerCase().includes(searchKeywordLower)) ||
+          (c.birthday && c.birthday.toLowerCase().includes(searchKeywordLower)) ||
+          (c.gender && c.gender.toLowerCase().includes(searchKeywordLower)) ||
+          (c.job && c.job.toLowerCase().includes(searchKeywordLower))
+        );
       });
       return data.map((c) => {
         return (
@@ -150,7 +156,7 @@ class App extends Component {
       });
     };
     
-    
+    const currentYear = new Date().getFullYear();
     const { classes } = this.props;
     const cellList = ["번호", "프로필 이미지","이름","생년월일","성별","직업","설정"];
     return (
@@ -158,7 +164,7 @@ class App extends Component {
       <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             size="large"
             edge="start"
             color="inherit"
@@ -166,7 +172,7 @@ class App extends Component {
             sx={{ mr: 2 }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography
             variant="h6"
             noWrap
@@ -193,6 +199,7 @@ class App extends Component {
     <div className={classes.menu}>
     <CustomerAdd stateRefresh={this.stateRefresh} />
     </div>
+    <main className="main">
     <Paper className={classes.paper}>
         <Table className={classes.table}>
           <TableHead>
@@ -214,6 +221,12 @@ class App extends Component {
         </TableBody>
         </Table>
       </Paper>
+      </main>
+      <footer className="footer">
+          <div className="contents">
+              <h2 className="title">Customer management system © {currentYear}</h2>
+          </div>
+        </footer>
       </div>
     );
   }
